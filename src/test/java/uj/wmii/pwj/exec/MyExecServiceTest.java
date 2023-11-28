@@ -105,6 +105,19 @@ public class MyExecServiceTest {
         }
     }
 
+    @Test
+    void testInvokeAny() throws InterruptedException, ExecutionException, TimeoutException {
+        MyExecService execService = MyExecService.newInstance();
+
+        List<Callable<String>> tasks = new ArrayList<>();
+        tasks.add(() -> {
+            return "Task 1 completed";
+        });
+
+        String result = execService.invokeAny(tasks, 50, TimeUnit.MILLISECONDS);
+        assertEquals("Task 1 completed", result);
+    }
+
     class TestRunnable implements Runnable {
 
         boolean wasRun;
