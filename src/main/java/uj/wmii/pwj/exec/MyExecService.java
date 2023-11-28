@@ -10,6 +10,7 @@ public class MyExecService implements ExecutorService {
     private final BlockingQueue<Runnable> tasks = new LinkedBlockingQueue<>();
     private final Worker worker = new Worker();
     private volatile boolean isShutDown = false;
+
     MyExecService(){
         this.worker.start();
     }
@@ -119,7 +120,8 @@ public class MyExecService implements ExecutorService {
     public void execute(Runnable command) {
         if(!isShutDown)
             tasks.add(command);
-        else System.err.println("executeService is shut down");
+        else
+            System.err.println("executeService is shut down");
     }
 
     private class Worker extends Thread{
